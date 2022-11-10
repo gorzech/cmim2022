@@ -3,5 +3,7 @@ function sys = make_system()
 
 sys = struct();
 
+sys.bodies = struct([]);
+
 end
 

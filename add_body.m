@@ -10,10 +10,6 @@ function sys = add_body(sys, name, location, orientation)
     body.location = location;
     body.orientation = orientation;
 
-    if ~isfield(sys, "bodies")
-        sys.bodies = body;
-    else
-        sys.bodies(end + 1) = body;
-    end
+    sys.bodies = [sys.bodies, body];
 end
 
