@@ -7,18 +7,10 @@ function sys = add_joint_simple_driving(sys, body_name, coord_name, coord_fun)
     end
     check_body_exists(sys, body_name)
 
-    if coord_name == "x"
-        c_id = 1;
-    elseif coord_name == "y"
-        c_id = 2;
-    elseif coord_name == "fi"
-        c_id = 3;
-    else
-        error("Unknown coordinate name %s!", coord_name);
-    end
+    c_id = coordinate_name_to_id(coord_name);
 
     j = struct();
-    j.body = body_name;
+    j.body_qidx = body_name_to_qidx(sys, body_name);
     j.coord_id = c_id;
     j.coord_fun = coord_fun;
 

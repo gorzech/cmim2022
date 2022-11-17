@@ -20,4 +20,16 @@ sys = add_joint_revolute(sys, "link", "slider", [-0.2; 0]);
 sys = add_joint_simple(sys, "slider", "y");
 sys = add_joint_simple(sys, "slider", "fi");
 
+sys = add_joint_simple(sys, "ground", "x");
+sys = add_joint_simple(sys, "ground", "y");
+sys = add_joint_simple(sys, "ground", "fi");
+
 sys = add_joint_simple_driving(sys, "crank", "fi", @(t) -deg2rad(30) + 1.2 * t);
+
+%% Solver part
+
+q0 = initial_coordinates(sys);
+
+q = fsolve(@(q) constraints(sys, q, 0), q0)
+
+% C = constraints(sys, q, 0)

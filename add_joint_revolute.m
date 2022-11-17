@@ -13,8 +13,8 @@ function sys = add_joint_revolute(sys, body_i, ...
     check_body_exists(sys, body_j)
     
     joint = struct();
-    joint.body_i = body_i;
-    joint.body_j = body_j;
+    joint.body_i_qidx = body_name_to_qidx(sys, body_i);
+    joint.body_j_qidx = body_name_to_qidx(sys, body_j);
     joint.s_i = s_i;
     joint.s_j = s_j;
 
