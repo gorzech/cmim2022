@@ -1,5 +1,5 @@
 function sys = add_body(sys, name, location, orientation)
-%ADD_BODY Add single bosy to the multibody system
+%ADD_BODY Add single body to the multibody system
     arguments
         sys (1,1) struct
         name (1,1) string
