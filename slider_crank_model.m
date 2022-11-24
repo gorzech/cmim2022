@@ -1,3 +1,4 @@
+%% PREPROCESSOR
 % Globally we have a complete multibody system
 % It must contain bodies, joints, analysis settings
 sys = make_system();
@@ -24,12 +25,23 @@ sys = add_joint_simple(sys, "ground", "x");
 sys = add_joint_simple(sys, "ground", "y");
 sys = add_joint_simple(sys, "ground", "fi");
 
-sys = add_joint_simple_driving(sys, "crank", "fi", @(t) -deg2rad(30) + 1.2 * t);
+sys = add_joint_simple_driving(sys, "crank", "fi", ...,
+    @(t) -deg2rad(30) - 1.2 * t, ...
+    @(t) - 1.2);
 
-%% Solver part
+sys = set_solver_settings(sys, 10, 0.001);
 
-q0 = initial_coordinates(sys);
+%% SOLVER fsolve
 
-q = fsolve(@(q) constraints(sys, q, 0), q0)
+[Tf, Qf] = solve_kinematics_fsolve(sys);
 
-% C = constraints(sys, q, 0)
+%% SOLVER NR
+
+[T, Q, Qd] = solve_kinematics_NR(sys);
+
+%% POSTPROCESSING
+pidx = 4;
+plot(T, Qd(pidx, :), ...
+    T(1:end-1), (Q(pidx, 2:end)-Q(pidx, 1:end-1))/0.001, '--')
+% axis equal
+
