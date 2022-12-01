@@ -1,7 +1,11 @@
-function sys = make_system()
+function sys = make_system(gravity)
 %MAKE_SYSTEM Create a data structure to store complete multibody system
-
+arguments
+    gravity (2,1) double = [0; -9.80665]
+end
 sys = struct();
+
+sys.gravity = gravity;
 
 sys.bodies = struct([]);
 
